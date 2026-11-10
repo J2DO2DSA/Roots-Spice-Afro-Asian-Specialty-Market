@@ -1,102 +1,179 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roots & Spice | Afro-Asian Specialty Retail & E-Commerce Fürstenwalde</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-600 selection:text-white">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-600 selection:text-white flex flex-col min-h-screen">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-stone-900 text-stone-200 text-xs sm:text-sm py-2 px-4 text-center font-medium tracking-wide flex justify-center items-center gap-4">
-        <span><i class="fa-solid fa-location-dot text-amber-500 mr-1.5"></i> Flagship Store: Richard-Wagner-Straße 6, 15517 Fürstenwalde/Spree</span>
-        <span class="hidden md:inline text-stone-500">|</span>
-        <span class="hidden md:inline"><i class="fa-solid fa-truck-fast text-amber-500 mr-1.5"></i> Regio-Delivery in Oder-Spree & Nationwide Shipping</span>
+    <!-- Top Announcement Bar with Language Switcher -->
+    <div class="bg-slate-900 text-slate-200 text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
+            <div class="flex items-center gap-2 truncate">
+                <i class="fa-solid fa-location-dot text-emerald-400 shrink-0"></i>
+                <span id="top-bar-address" class="truncate">Store Location: Richard-Wagner-Straße 6, 15517 Fürstenwalde/Spree</span>
+            </div>
+            <!-- Language Switcher Toggle Buttons -->
+            <div class="flex items-center gap-1 shrink-0 bg-slate-800 p-1 rounded-lg border border-slate-700">
+                <button onclick="setLanguage('en')" id="lang-en-btn" class="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-600 text-white transition-all cursor-pointer">EN</button>
+                <button onclick="setLanguage('de')" id="lang-de-btn" class="px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white transition-all cursor-pointer">DE</button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+            <a href="#" onclick="scrollToTop(event)" class="flex items-center gap-3 group shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-slate-900 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform">
                     R&S
                 </div>
                 <div>
-                    <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-stone-900 block leading-none">Roots & Spice</span>
-                    <span class="text-xs font-semibold tracking-widest text-amber-700 uppercase mt-1 block">Afro-Asian Market & E-Commerce</span>
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 block leading-none">Roots & Spice</span>
+                    <span class="text-[11px] font-semibold tracking-wider text-emerald-700 uppercase mt-1 block" data-i18n="nav-sub">Afro-Asian Market & E-Commerce</span>
                 </div>
             </a>
 
             <!-- Navigation Links -->
-            <nav class="hidden lg:flex items-center gap-8 font-medium text-stone-600">
-                <a href="#shop" class="hover:text-amber-700 transition-colors">Shop Assortment</a>
-                <a href="#categories" class="hover:text-amber-700 transition-colors">Departments</a>
-                <a href="#concept" class="hover:text-amber-700 transition-colors">Our Concept</a>
-                <a href="#reviews" class="hover:text-amber-700 transition-colors">Community & Feedback</a>
-                <a href="#contact" class="hover:text-amber-700 transition-colors">Contact & Location</a>
+            <nav class="hidden lg:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                <a href="#shop" onclick="navigateToCategory('all', event)" class="hover:text-emerald-700 transition-colors" data-i18n="link-shop">Assortment</a>
+                <a href="#categories" onclick="scrollToElement('categories', event)" class="hover:text-emerald-700 transition-colors" data-i18n="link-categories">Departments</a>
+                <a href="#concept" onclick="scrollToElement('concept', event)" class="hover:text-emerald-700 transition-colors" data-i18n="link-concept">Our Concept</a>
+                <a href="#reviews" onclick="scrollToElement('reviews', event)" class="hover:text-emerald-700 transition-colors" data-i18n="link-reviews">Community Comments</a>
+                <a href="#contact" onclick="scrollToElement('contact', event)" class="hover:text-emerald-700 transition-colors" data-i18n="link-contact">Store & Contact</a>
             </nav>
 
-            <!-- Actions (Cart & WhatsApp) -->
+            <!-- Actions (Direct WhatsApp Chat & Mobile Menu Toggle) -->
             <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="relative bg-stone-100 hover:bg-amber-100 text-stone-800 hover:text-amber-800 px-4 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2.5 cursor-pointer">
-                    <i class="fa-solid fa-cart-shopping text-amber-700"></i>
-                    <span class="hidden sm:inline">Cart</span>
-                    <span id="cart-badge" class="bg-amber-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">0</span>
-                </button>
-                <a href="https://wa.me/?text=Hello%20Roots%20and%20Spice%2C%20I%20would%20like%20to%20order..." target="_blank" class="hidden sm:inline-flex bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-semibold transition-all items-center gap-2 shadow-xs text-sm">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
+                <a href="https://wa.me/4915144338689?text=Hello%20Roots%20%26%20Spice%2C%20I%20have%20an%20inquiry%20from%20your%20website" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 shadow-xs text-xs sm:text-sm">
+                    <i class="fa-brands fa-whatsapp text-base sm:text-lg"></i> <span class="hidden sm:inline" data-i18n="whatsapp-btn">Chat on WhatsApp</span>
                 </a>
+
+                <!-- Mobile Menu Drawer Button -->
+                <button onclick="toggleMobileDrawer()" class="lg:hidden p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 transition-colors" aria-label="Open Navigation">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Slide-out Drawer -->
+    <div id="mobileDrawerOverlay" onclick="toggleMobileDrawer()" class="fixed inset-0 bg-slate-900/60 z-50 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+    <aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col">
+        <div class="p-5 bg-slate-900 text-white flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center font-bold text-sm">R&S</div>
+                <span class="font-bold text-base">Roots & Spice</span>
+            </div>
+            <button onclick="toggleMobileDrawer()" class="text-slate-400 hover:text-white p-2 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="p-4 bg-emerald-50/50 border-b border-emerald-100 flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-600 uppercase" data-i18n="lang-select">Language / Sprache</span>
+            <div class="flex bg-white rounded-lg p-1 border border-slate-200">
+                <button onclick="setLanguage('en')" id="drawer-lang-en" class="px-3 py-1 text-xs font-bold rounded-md bg-emerald-600 text-white shadow-xs">EN</button>
+                <button onclick="setLanguage('de')" id="drawer-lang-de" class="px-3 py-1 text-xs font-bold rounded-md text-slate-600 hover:text-slate-900">DE</button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-3">
+            <div class="px-5 py-2 text-xs font-bold uppercase tracking-wider text-slate-400" data-i18n="mobile-dept-title">Product Departments</div>
+            <a href="#shop" onclick="navigateToCategory('all', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-border-all mr-2 text-emerald-600"></i> <span data-i18n="filter-all">All Items</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('frozen', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-snowflake mr-2 text-emerald-600"></i> <span data-i18n="filter-frozen">Frozen Foods</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('cosmetics', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-wand-magic-sparkles mr-2 text-emerald-600"></i> <span data-i18n="filter-cosmetics">Cosmetics & Hair</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('grains', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-wheat-awn mr-2 text-emerald-600"></i> <span data-i18n="filter-grains">Grains & Flours</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('snacks', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-cookie mr-2 text-emerald-600"></i> <span data-i18n="filter-snacks">Pastries & Snacks</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('spices', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-pepper-hot mr-2 text-emerald-600"></i> <span data-i18n="filter-spices">Oils & Spices</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+            <a href="#shop" onclick="navigateToCategory('fresh', event)" class="flex items-center justify-between px-5 py-3.5 text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 border-b border-slate-100 font-medium text-sm">
+                <span><i class="fa-solid fa-carrot mr-2 text-emerald-600"></i> <span data-i18n="filter-fresh">Fresh Produce</span></span>
+                <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+
+            <div class="px-5 pt-6 pb-2 text-xs font-bold uppercase tracking-wider text-slate-400" data-i18n="mobile-pages-title">Store Links</div>
+            <a href="#concept" onclick="scrollToElement('concept', event); toggleMobileDrawer();" class="block px-5 py-2.5 text-slate-700 hover:text-emerald-700 text-sm font-medium" data-i18n="link-concept">Our Concept</a>
+            <a href="#reviews" onclick="scrollToElement('reviews', event); toggleMobileDrawer();" class="block px-5 py-2.5 text-slate-700 hover:text-emerald-700 text-sm font-medium" data-i18n="link-reviews">Community Comments</a>
+            <a href="#contact" onclick="scrollToElement('contact', event); toggleMobileDrawer();" class="block px-5 py-2.5 text-slate-700 hover:text-emerald-700 text-sm font-medium" data-i18n="link-contact">Store & Contact</a>
+        </div>
+
+        <div class="p-4 border-t border-slate-200 bg-slate-50 text-xs text-slate-500 text-center">
+            <p data-i18n="need-help">Questions or direct orders?</p>
+            <a href="https://wa.me/4915144338689" target="_blank" class="font-bold text-emerald-700 mt-1 inline-block"><i class="fa-brands fa-whatsapp"></i> +49 151 44338689</a>
+        </div>
+    </aside>
+
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white py-20 lg:py-28 overflow-hidden">
-        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#d97706_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-7 space-y-6">
-                <span class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
-                    <i class="fa-solid fa-globe"></i> Authentic African & Asian Heritage in Brandenburg
+    <section class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white py-16 lg:py-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <span class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase">
+                    <i class="fa-solid fa-globe"></i> <span data-i18n="hero-tag">Authentic African & Asian Specialty Imports in Brandenburg</span>
                 </span>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-                    Your Hub for Authentic <span class="text-amber-500 underline decoration-amber-500/40 underline-offset-8">Afro-Asian</span> Foods & Cosmetics.
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    <span data-i18n="hero-title-1">Your Destination for Authentic</span> <span class="text-emerald-400 underline decoration-emerald-500/40 underline-offset-8">Afro-Asian</span> <span data-i18n="hero-title-2">Foods & Cosmetics.</span>
                 </h1>
-                <p class="text-stone-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
-                    Bridging continents in Fürstenwalde/Spree. Discover high-demand staples like yams and plantains, aromatic Asian spices, frozen seafood, premium natural shea butter, and vibrant wax prints.
+                <p class="text-slate-300 text-sm sm:text-lg max-w-2xl font-normal leading-relaxed mx-auto lg:mx-0" data-i18n="hero-desc">
+                    Bridging culinary cultures in Fürstenwalde/Spree. Discover authentic staples like white yam tubers, plantains, aromatic spices, frozen seafood, flours, and natural afro cosmetics.
                 </p>
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <a href="#shop" class="bg-amber-600 hover:bg-amber-500 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-bag-shopping"></i> Explore Products
+                <div class="flex flex-wrap gap-3.5 justify-center lg:justify-start pt-2">
+                    <a href="#shop" onclick="navigateToCategory('all', event)" class="bg-emerald-600 hover:bg-emerald-500 text-white px-7 py-3.5 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fa-solid fa-bag-shopping"></i> <span data-i18n="hero-btn-shop">Explore Assortment</span>
                     </a>
-                    <a href="#contact" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-xl font-bold transition-all backdrop-blur-sm">
-                        Visit Store / Click & Collect
+                    <a href="#contact" onclick="scrollToElement('contact', event)" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-7 py-3.5 rounded-xl font-bold transition-all backdrop-blur-xs text-sm sm:text-base" data-i18n="hero-btn-visit">
+                        Visit Store / Location
                     </a>
                 </div>
             </div>
             <div class="lg:col-span-5">
                 <div class="bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/20 shadow-2xl space-y-5">
                     <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-store text-amber-400"></i> Store & Regional Service
+                        <i class="fa-solid fa-store text-emerald-400"></i> <span data-i18n="box-title">Store & Local Service</span>
                     </h3>
-                    <ul class="space-y-4 text-stone-200 text-sm">
+                    <ul class="space-y-4 text-slate-200 text-xs sm:text-sm">
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
-                            <div><strong>Physical Store:</strong> Richard-Wagner-Straße 6, Fürstenwalde (Near HBF & Eisenbahnstraße).</div>
+                            <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="box-1-strong">Walk-In Store:</strong> <span data-i18n="box-1-text">Richard-Wagner-Straße 6, 15517 Fürstenwalde (Near Central Station).</span></div>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
-                            <div><strong>E-Commerce & Delivery:</strong> Fast shipping via DHL/Hermes & local evening delivery across Oder-Spree (Erkner, Beeskow)[cite: 2].</div>
+                            <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="box-2-strong">E-Commerce & Delivery:</strong> <span data-i18n="box-2-text">Fast shipping & regional evening delivery across Oder-Spree district.</span></div>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-check text-amber-400 mt-1"></i>
-                            <div><strong>B2B Services:</strong> Wholesale supply for local gastronomy and Afro-hair salons[cite: 2].</div>
+                            <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="box-3-strong">Wholesale & B2B:</strong> <span data-i18n="box-3-text">Direct supply for local gastronomy, restaurants, and hair styling salons.</span></div>
                         </li>
                     </ul>
                 </div>
@@ -104,85 +181,98 @@
         </div>
     </section>
 
-    <!-- Departments / Categories Bar -->
-    <section id="categories" class="py-12 bg-white border-b border-stone-200">
+    <!-- Departments / Categories Selection Section -->
+    <section id="categories" class="py-12 bg-white border-b border-slate-200 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <h2 class="text-2xl sm:text-3xl font-bold text-stone-900">Our Core Product Departments</h2>
-                <p class="text-stone-600 text-sm mt-2">Carefully sourced staples, specialties, and high-margin goods meeting strict EU standards.</p>
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900" data-i18n="cat-heading">Product Departments</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mt-1.5" data-i18n="cat-sub">Select a department below to view items instantly in the catalog.</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-                <button onclick="filterCategory('all')" class="cat-btn bg-amber-50 border-2 border-amber-600 text-amber-900 p-5 rounded-2xl text-center font-bold transition-all cursor-pointer shadow-xs">
-                    <i class="fa-solid fa-border-all text-2xl text-amber-600 mb-2 block"><span>All Products</span></i>
+
+            <!-- Category Filter Buttons Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
+                <button onclick="navigateToCategory('all', event)" data-cat="all" class="cat-btn bg-emerald-50 border-2 border-emerald-600 text-emerald-900 p-4 rounded-xl text-center font-bold text-xs transition-all cursor-pointer shadow-xs ring-2 ring-emerald-600/30">
+                    <i class="fa-solid fa-border-all text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-all">All Items</span>
                 </button>
-                <button onclick="filterCategory('food')" class="cat-btn bg-stone-50 hover:bg-amber-50 border-2 border-stone-200 hover:border-amber-600 text-stone-800 p-5 rounded-2xl text-center font-semibold transition-all cursor-pointer">
-                    <i class="fa-solid fa-bowl-rice text-2xl text-amber-600 mb-2 block"><span>Staples & Foods</span></i>
+                <button onclick="navigateToCategory('frozen', event)" data-cat="frozen" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-snowflake text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-frozen">Frozen Foods</span>
                 </button>
-                <button onclick="filterCategory('frozen')" class="cat-btn bg-stone-50 hover:bg-amber-50 border-2 border-stone-200 hover:border-amber-600 text-stone-800 p-5 rounded-2xl text-center font-semibold transition-all cursor-pointer">
-                    <i class="fa-solid fa-snowflake text-2xl text-amber-600 mb-2 block"><span>Frozen & Fresh</span></i>
+                <button onclick="navigateToCategory('cosmetics', event)" data-cat="cosmetics" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-cosmetics">Cosmetics & Hair</span>
                 </button>
-                <button onclick="filterCategory('cosmetics')" class="cat-btn bg-stone-50 hover:bg-amber-50 border-2 border-stone-200 hover:border-amber-600 text-stone-800 p-5 rounded-2xl text-center font-semibold transition-all cursor-pointer">
-                    <i class="fa-solid fa-wand-magic-sparkles text-2xl text-amber-600 mb-2 block"><span>Cosmetics & Hair</span></i>
+                <button onclick="navigateToCategory('grains', event)" data-cat="grains" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-wheat-awn text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-grains">Grains & Flours</span>
+                </button>
+                <button onclick="navigateToCategory('snacks', event)" data-cat="snacks" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-cookie text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-snacks">Pastries & Snacks</span>
+                </button>
+                <button onclick="navigateToCategory('spices', event)" data-cat="spices" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-pepper-hot text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-spices">Oils & Spices</span>
+                </button>
+                <button onclick="navigateToCategory('fresh', event)" data-cat="fresh" class="cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer">
+                    <i class="fa-solid fa-carrot text-xl text-emerald-600 mb-1.5 block"></i><span data-i18n="filter-fresh">Fresh Produce</span>
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Main Product Catalog -->
-    <section id="shop" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Main Product Catalog Grid -->
+    <section id="shop" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28 flex-grow">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
-                <h2 class="text-3xl font-extrabold text-stone-900">Featured Assortment</h2>
-                <p class="text-stone-600 text-sm">Order online for delivery or reserve for in-store pickup in Fürstenwalde[cite: 2].</p>
+                <h2 id="current-dept-heading" class="text-2xl sm:text-3xl font-extrabold text-slate-900" data-i18n="shop-heading">Product Assortment Showcase</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mt-1" data-i18n="shop-sub">Explore our authentic imports available in-store in Fürstenwalde or via regional delivery.</p>
             </div>
-            <div class="w-full md:w-auto">
-                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search rice, yam, shea butter, spices..." class="w-full md:w-80 bg-white border border-stone-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 shadow-xs">
+            <!-- Search Bar -->
+            <div class="w-full md:w-auto relative">
+                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="Search garri, yam, shea butter..." class="w-full md:w-80 bg-white border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 shadow-xs" data-i18n-ph="search-ph">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
             </div>
         </div>
 
-        <!-- Product Grid -->
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Products injected dynamically via JavaScript -->
+        <!-- Product Cards Container -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamically Populated via JS -->
         </div>
     </section>
 
     <!-- Concept & Business Overview Section -->
-    <section id="concept" class="bg-stone-900 text-white py-20">
+    <section id="concept" class="bg-slate-900 text-white py-20 scroll-mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
-                    <span class="text-amber-400 font-semibold text-xs tracking-widest uppercase bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">Jobcenter / IHK Business Proposal</span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">The Hybrid Afro-Asian Retail Concept</h2>
-                    <p class="text-stone-300 leading-relaxed text-sm sm:text-base">
-                        Roots & Spice bridges a critical retail gap in the Oder-Spree district. Rather than commuting 45–60 minutes to Berlin for authentic ingredients, local international families, food enthusiasts, and industrial workers in the Grünheide tech cluster have direct access right here in Fürstenwalde[cite: 2, 4].
+                    <span class="text-emerald-400 font-semibold text-xs tracking-widest uppercase bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full" data-i18n="concept-tag">Business Concept & Community Purpose</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" data-i18n="concept-title">The Hybrid Afro-Asian Retail Model</h2>
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base" data-i18n="concept-desc">
+                        Roots & Spice bridges a critical retail gap in the Oder-Spree district. Rather than commuting 45–60 minutes to Berlin, local international families, industrial hub workers, and food enthusiasts gain direct local access right here in Fürstenwalde/Spree.
                     </p>
-                    <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6 pt-2">
                         <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
-                            <div class="text-amber-400 text-2xl font-black mb-1">45%</div>
-                            <div class="text-stone-400 text-xs">High-Frequency Staples (Yams, Plantains, Rice, Palm Oil)[cite: 2]</div>
+                            <div class="text-emerald-400 text-2xl font-black mb-1">45%</div>
+                            <div class="text-slate-400 text-xs" data-i18n="stat-1">High-Frequency Staples (Yams, Plantains, Rice, Palm Oil)</div>
                         </div>
                         <div class="bg-white/5 border border-white/10 p-5 rounded-2xl">
-                            <div class="text-amber-400 text-2xl font-black mb-1">25%</div>
-                            <div class="text-stone-400 text-xs">High-Margin Cosmetics & Hair Extensions (Shea Butter, Black Soap)[cite: 2]</div>
+                            <div class="text-emerald-400 text-2xl font-black mb-1">25%</div>
+                            <div class="text-slate-400 text-xs" data-i18n="stat-2">High-Margin Cosmetics & Hair Extensions (Shea Butter, Black Soap)</div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-stone-800 border border-stone-700 p-8 rounded-3xl space-y-6 shadow-xl">
+                <div class="bg-slate-800 border border-slate-700 p-8 rounded-3xl space-y-6 shadow-xl">
                     <h3 class="text-xl font-bold text-white flex items-center gap-3">
-                        <i class="fa-solid fa-bullseye text-amber-500"></i> Strategic Advantages
+                        <i class="fa-solid fa-bullseye text-emerald-400"></i> <span data-i18n="adv-title">Strategic Advantages</span>
                     </h3>
-                    <ul class="space-y-4 text-stone-300 text-sm">
+                    <ul class="space-y-4 text-slate-300 text-xs sm:text-sm">
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-circle-check text-amber-500 mt-1"></i>
-                            <div><strong>Prime Location Access:</strong> Situated near Fürstenwalde HBF / Eisenbahnstraße zone with excellent transport links[cite: 2].</div>
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="adv-1-strong">Prime Access Location:</strong> <span data-i18n="adv-1-text">Situated near Fürstenwalde HBF / Eisenbahnstraße zone with excellent transport links.</span></div>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-circle-check text-amber-500 mt-1"></i>
-                            <div><strong>Hybrid Omnichannel:</strong> Physical walk-in store combined with a robust regional e-commerce delivery system[cite: 2].</div>
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="adv-2-strong">Hybrid Omnichannel:</strong> <span data-i18n="adv-2-text">Physical walk-in store combined with a robust regional e-commerce delivery system.</span></div>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-circle-check text-amber-500 mt-1"></i>
-                            <div><strong>Community Hub:</strong> Serving as a welcoming cultural meeting point for the growing international demographic in Brandenburg[cite: 2].</div>
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <div><strong data-i18n="adv-3-strong">Cultural Meeting Point:</strong> <span data-i18n="adv-3-text">Serving as a welcoming hub for the growing international community in Brandenburg.</span></div>
                         </li>
                     </ul>
                 </div>
@@ -191,291 +281,416 @@
     </section>
 
     <!-- Customer Reviews & Feedback Section -->
-    <section id="reviews" class="py-20 bg-stone-100">
+    <section id="reviews" class="py-20 bg-slate-100 scroll-mt-20">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-stone-900">Community & Visitor Comments</h2>
-                <p class="text-stone-600 text-sm mt-2">Share your thoughts, product requests, or feedback as we prepare our grand opening in Fürstenwalde!</p>
+                <h2 class="text-3xl font-extrabold text-slate-900" data-i18n="rev-heading">Community & Visitor Comments</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mt-2" data-i18n="rev-sub">Share your thoughts, product requests, or feedback as we serve Fürstenwalde!</p>
             </div>
 
             <!-- Review Submission Form -->
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-stone-200 mb-12">
-                <h3 class="text-lg font-bold text-stone-900 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-comment-dots text-amber-600"></i> Leave a Comment or Suggestion
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-xs border border-slate-200 mb-10">
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-comment-dots text-emerald-600"></i> <span data-i18n="form-title">Leave a Comment or Product Suggestion</span>
                 </h3>
                 <form id="review-form" onsubmit="submitReview(event)" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Your Name</label>
-                            <input type="text" id="reviewer-name" required placeholder="e.g. Maria Schmidt" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1" data-i18n="form-name">Your Name</label>
+                            <input type="text" id="reviewer-name" required placeholder="Maria S." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Rating</label>
-                            <select id="reviewer-rating" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600">
-                                <option value="5">★★★★★ (5/5 - Excellent Concept)</option>
-                                <option value="4">★★★★☆ (4/5 - Very Good)</option>
-                                <option value="3">★★★☆☆ (3/5 - Good)</option>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1" data-i18n="form-rating">Rating</label>
+                            <select id="reviewer-rating" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                                <option value="5">★★★★★ (5/5)</option>
+                                <option value="4">★★★★☆ (4/5)</option>
+                                <option value="3">★★★☆☆ (3/5)</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Your Comment / Desired Product</label>
-                        <textarea id="reviewer-text" rows="3" required placeholder="What African or Asian products would you love to see in store?" class="w-full bg-stone-50 border border-stone-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1" data-i18n="form-comment">Your Comment / Desired Product</label>
+                        <textarea id="reviewer-text" rows="3" required placeholder="Tell us what items you would like to see..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"></textarea>
                     </div>
-                    <button type="submit" class="bg-stone-900 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm shadow-md cursor-pointer">
+                    <button type="submit" class="bg-slate-900 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl transition-colors text-xs sm:text-sm shadow-md cursor-pointer" data-i18n="form-btn">
                         Post Comment
                     </button>
                 </form>
             </div>
 
             <!-- Comments List Container -->
-            <div id="reviews-list" class="space-y-4">
-                <!-- Dynamic Reviews -->
-            </div>
+            <div id="reviews-list" class="space-y-4"></div>
         </div>
     </section>
 
     <!-- Contact & Store Information Footer -->
-    <footer id="contact" class="bg-stone-950 text-stone-400 py-16 border-t border-stone-800">
+    <footer id="contact" class="bg-slate-950 text-slate-400 py-16 border-t border-slate-800 scroll-mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             <div class="space-y-4 md:col-span-1">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-amber-600 flex items-center justify-center text-white font-black text-lg">R&S</div>
+                    <div class="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg">R&S</div>
                     <span class="text-white font-bold text-lg tracking-tight">Roots & Spice</span>
                 </div>
-                <p class="text-xs text-stone-400 leading-relaxed">
-                    Hybrid Afro-Asian retail store and e-commerce platform based in Fürstenwalde/Spree, Brandenburg.
+                <p class="text-xs text-slate-400 leading-relaxed" data-i18n="footer-desc">
+                    Hybrid Afro-Asian specialty store and e-commerce platform based in Fürstenwalde/Spree, Brandenburg.
                 </p>
                 <div class="flex gap-3 pt-2">
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-amber-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-amber-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-amber-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-tiktok text-sm"></i></a>
-                    <a href="https://wa.me/" target="_blank" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-emerald-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                    <a href="https://wa.me/4915144338689" target="_blank" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-emerald-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp text-base"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-emerald-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-emerald-600 text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
                 </div>
             </div>
             <div>
-                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Store Location</h4>
-                <p class="text-xs space-y-2">
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4" data-i18n="footer-loc-title">Store Location</h4>
+                <p class="text-xs leading-relaxed space-y-1">
+                    <strong class="text-white">Roots & Spice</strong><br>
                     Richard-Wagner-Straße 6<br>
                     15517 Fürstenwalde/Spree<br>
-                    Germany
+                    <span data-i18n="country">Germany</span>
                 </p>
             </div>
             <div>
-                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4" data-i18n="footer-links-title">Quick Links</h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="#shop" class="hover:text-amber-500 transition-colors">Product Assortment</a></li>
-                    <li><a href="#concept" class="hover:text-amber-500 transition-colors">Business Concept</a></li>
-                    <li><a href="#reviews" class="hover:text-amber-500 transition-colors">Community Comments</a></li>
-                    <li><a href="#" class="hover:text-amber-500 transition-colors">Impressum & Datenschutz</a></li>
+                    <li><a href="#shop" onclick="navigateToCategory('all', event)" class="hover:text-emerald-400 transition-colors" data-i18n="link-shop">Assortment</a></li>
+                    <li><a href="#concept" onclick="scrollToElement('concept', event)" class="hover:text-emerald-400 transition-colors" data-i18n="link-concept">Our Concept</a></li>
+                    <li><a href="#reviews" onclick="scrollToElement('reviews', event)" class="hover:text-emerald-400 transition-colors" data-i18n="link-reviews">Community Comments</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Imprint & Privacy Policy</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Newsletter & Updates</h4>
-                <p class="text-xs mb-3">Subscribe for grand opening dates and special import arrivals.</p>
-                <div class="flex gap-2">
-                    <input type="email" placeholder="Your email address" class="bg-stone-900 border border-stone-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-600 w-full">
-                    <button onclick="alert('Thank you for subscribing!')" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer">Join</button>
-                </div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4" data-i18n="footer-news-title">Direct Contact</h4>
+                <p class="text-xs mb-3 leading-relaxed" data-i18n="footer-news-sub">Have questions or product inquiries? Contact us on WhatsApp.</p>
+                <a href="https://wa.me/4915144338689" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-colors">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> <span data-i18n="whatsapp-btn">Chat on WhatsApp</span>
+                </a>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-stone-900 text-center text-xs text-stone-600">
-            &copy; 2026 Roots & Spice Afro-Asian Specialty Retail. All rights reserved.
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-600">
+            &copy; 2026 Roots & Spice Afro-Asian Specialty Retail. <span data-i18n="rights">All rights reserved.</span>
         </div>
     </footer>
 
-    <!-- Shopping Cart Slide-over Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <div class="absolute inset-0 bg-stone-900/60 backdrop-blur-xs transition-opacity" onclick="toggleCart()"></div>
-        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
-                <div class="p-6 border-b border-stone-200 flex items-center justify-between">
-                    <h3 class="text-lg font-bold text-stone-900 flex items-center gap-2">
-                        <i class="fa-solid fa-cart-shopping text-amber-600"></i> Your Shopping Cart
-                    </h3>
-                    <button onclick="toggleCart()" class="text-stone-400 hover:text-stone-700 p-2 cursor-pointer text-lg"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-                    <!-- Cart items injected here -->
-                </div>
-                <div class="p-6 border-t border-stone-200 bg-stone-50 space-y-4">
-                    <div class="flex justify-between text-sm text-stone-600">
-                        <span>Subtotal</span>
-                        <span id="cart-subtotal" class="font-bold text-stone-900">€0.00</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-stone-600">
-                        <span>Est. Shipping (Oder-Spree / Germany)</span>
-                        <span class="font-bold text-stone-900">€4.99</span>
-                    </div>
-                    <div class="border-t border-stone-200 pt-3 flex justify-between text-base font-extrabold text-stone-900">
-                        <span>Total (incl. VAT)</span>
-                        <span id="cart-total" class="text-amber-700">€0.00</span>
-                    </div>
-                    <button onclick="checkout()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-lock"></i> Proceed to Checkout
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript & Translations Database -->
     <script>
-        const products = [
-            { id: 1, name: "Fresh African Plantains (Kochbananen)", category: "food", price: 3.99, unit: "1.5 kg / Hand", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&auto=format&fit=crop&q=60", desc: "Fresh premium plantains, essential for fried dodo, boiling, or roasting." },
-            { id: 2, name: "Puna Yam (Ghanian/Nigerian Import)", category: "food", price: 6.50, unit: "per kg", image: "https://images.unsplash.com/photo-1590008451835-d3c2250d5258?w=500&auto=format&fit=crop&q=60", desc: "Authentic firm white yam tuber for delicious pounded yam or porridge." },
-            { id: 3, name: "Frozen Tilapia Fish (Whole)", category: "frozen", price: 7.99, unit: "800g pack", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop&q=60", desc: "Cleaned and frozen premium Tilapia, perfect for traditional stews and grilling." },
-            { id: 4, name: "Frozen African Catfish (Clarias)", category: "frozen", price: 9.50, unit: "1 kg pack", image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&auto=format&fit=crop&q=60", desc: "Rich in flavor, ideal for authentic pepper soup and specialty delicacies." },
-            { id: 5, name: "Raw Unrefined Shea Butter (Karité)", category: "cosmetics", price: 5.99, unit: "250g jar", image: "https://images.unsplash.com/photo-1608248597359-f538356f9f59?w=500&auto=format&fit=crop&q=60", desc: "100% natural organic moisturizing butter for skin and hair care." },
-            { id: 6, name: "Authentic African Black Soap (Dudu Osun)", category: "cosmetics", price: 3.50, unit: "150g bar", image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop&q=60", desc: "Traditional cleansing soap with honey, shea butter, and plant ash." },
-            { id: 7, name: "Aromatic Indian Basmati Rice", category: "food", price: 14.99, unit: "5 kg bag", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop&q=60", desc: "Long-grain fragrant premium rice sourced from trusted Asian importers." },
-            { id: 8, name: "Pure Red Palm Oil (Red Gold)", category: "food", price: 6.99, unit: "1 Liter bottle", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&auto=format&fit=crop&q=60", desc: "Unrefined traditional palm oil essential for authentic West African stews." }
+        const translations = {
+            en: {
+                "top-bar": "Store Location: Richard-Wagner-Straße 6, 15517 Fürstenwalde/Spree",
+                "nav-sub": "Afro-Asian Market & E-Commerce",
+                "link-shop": "Assortment",
+                "link-categories": "Departments",
+                "link-concept": "Our Concept",
+                "link-reviews": "Community Comments",
+                "link-contact": "Store & Contact",
+                "whatsapp-btn": "Chat on WhatsApp",
+                "hero-tag": "Authentic African & Asian Specialty Imports in Brandenburg",
+                "hero-title-1": "Your Destination for Authentic",
+                "hero-title-2": "Foods & Cosmetics.",
+                "hero-desc": "Bridging culinary cultures in Fürstenwalde/Spree. Discover authentic staples like white yam tubers, plantains, aromatic spices, frozen seafood, flours, and natural afro cosmetics.",
+                "hero-btn-shop": "Explore Assortment",
+                "hero-btn-visit": "Visit Store / Location",
+                "box-title": "Store & Local Service",
+                "box-1-strong": "Walk-In Store:",
+                "box-1-text": "Richard-Wagner-Straße 6, 15517 Fürstenwalde (Near Central Station).",
+                "box-2-strong": "E-Commerce & Delivery:",
+                "box-2-text": "Fast shipping & regional evening delivery across Oder-Spree district.",
+                "box-3-strong": "Wholesale & B2B:",
+                "box-3-text": "Direct supply for local gastronomy, restaurants, and hair styling salons.",
+                "cat-heading": "Product Departments",
+                "cat-sub": "Select a department below to view items instantly in the catalog.",
+                "filter-all": "All Items",
+                "filter-frozen": "Frozen Foods",
+                "filter-cosmetics": "Cosmetics & Hair",
+                "filter-grains": "Grains & Flours",
+                "filter-snacks": "Pastries & Snacks",
+                "filter-spices": "Oils & Spices",
+                "filter-fresh": "Fresh Produce",
+                "shop-heading": "Product Assortment Showcase",
+                "shop-sub": "Explore our authentic imports available in-store in Fürstenwalde or via regional delivery.",
+                "search-ph": "Search garri, yam, shea butter...",
+                "concept-tag": "Business Concept & Community Purpose",
+                "concept-title": "The Hybrid Afro-Asian Retail Model",
+                "concept-desc": "Roots & Spice bridges a critical retail gap in the Oder-Spree district. Rather than commuting 45–60 minutes to Berlin, local international families, industrial hub workers, and food enthusiasts gain direct local access right here in Fürstenwalde/Spree.",
+                "stat-1": "High-Frequency Staples (Yams, Plantains, Rice, Palm Oil)",
+                "stat-2": "High-Margin Cosmetics & Hair Extensions (Shea Butter, Black Soap)",
+                "adv-title": "Strategic Advantages",
+                "adv-1-strong": "Prime Access Location:",
+                "adv-1-text": "Situated near Fürstenwalde HBF / Eisenbahnstraße zone with excellent transport links.",
+                "adv-2-strong": "Hybrid Omnichannel:",
+                "adv-2-text": "Physical walk-in store combined with a robust regional e-commerce delivery system.",
+                "adv-3-strong": "Cultural Meeting Point:",
+                "adv-3-text": "Serving as a welcoming hub for the growing international community in Brandenburg.",
+                "rev-heading": "Community & Visitor Comments",
+                "rev-sub": "Share your thoughts, product requests, or feedback as we serve Fürstenwalde!",
+                "form-title": "Leave a Comment or Product Suggestion",
+                "form-name": "Your Name",
+                "form-rating": "Rating",
+                "form-comment": "Your Comment / Desired Product",
+                "form-btn": "Post Comment",
+                "footer-desc": "Hybrid Afro-Asian specialty store and e-commerce platform based in Fürstenwalde/Spree, Brandenburg.",
+                "footer-loc-title": "Store Location",
+                "country": "Germany",
+                "footer-links-title": "Quick Links",
+                "footer-news-title": "Direct Contact",
+                "footer-news-sub": "Have questions or product inquiries? Contact us on WhatsApp.",
+                "rights": "All rights reserved.",
+                "inquire": "Inquire via WhatsApp",
+                "lang-select": "Language / Sprache",
+                "mobile-dept-title": "Product Departments",
+                "mobile-pages-title": "Store Links",
+                "need-help": "Questions or direct orders?"
+            },
+            de: {
+                "top-bar": "Ladengeschäft: Richard-Wagner-Straße 6, 15517 Fürstenwalde/Spree",
+                "nav-sub": "Afro-Asian Markt & E-Commerce",
+                "link-shop": "Sortiment",
+                "link-categories": "Abteilungen",
+                "link-concept": "Unser Konzept",
+                "link-reviews": "Kundenstimmen",
+                "link-contact": "Standort & Kontakt",
+                "whatsapp-btn": "Auf WhatsApp chatten",
+                "hero-tag": "Authentische afrikanische & asiatische Vielfalt in Brandenburg",
+                "hero-title-1": "Ihr Fachgeschäft für authentische",
+                "hero-title-2": "Lebensmittel & Kosmetik.",
+                "hero-desc": "Kulturelle Brücken in Fürstenwalde/Spree. Entdecken Sie gefragte Grundnahrungsmittel wie Yamswurzeln und Kochbananen, aromatische Gewürze, Tiefkühlfisch, Naturkosmetik und vieles mehr.",
+                "hero-btn-shop": "Sortiment ansehen",
+                "hero-btn-visit": "Laden besuchen / Standort",
+                "box-title": "Laden & Regionaler Service",
+                "box-1-strong": "Physischer Store:",
+                "box-1-text": "Richard-Wagner-Straße 6, 15517 Fürstenwalde (Nähe Hbf).",
+                "box-2-strong": "E-Commerce & Lieferung:",
+                "box-2-text": "Schneller Versand & lokaler Abendservice im Landkreis Oder-Spree.",
+                "box-3-strong": "B2B-Service:",
+                "box-3-text": "Belieferung von Gastronomie und lokalen Afro-Friseursalons.",
+                "cat-heading": "Unsere Produktabteilungen",
+                "cat-sub": "Wählen Sie eine Abteilung aus, um Artikel direkt im Katalog anzuzeigen.",
+                "filter-all": "Alle Artikel",
+                "filter-frozen": "Tiefkühlkost",
+                "filter-cosmetics": "Kosmetik & Haar",
+                "filter-grains": "Getreide & Mehl",
+                "filter-snacks": "Gebäck & Snacks",
+                "filter-spices": "Öle & Gewürze",
+                "filter-fresh": "Frischwaren",
+                "shop-heading": "Produktsortiment",
+                "shop-sub": "Entdecken Sie unsere authentischen Importe direkt vor Ort in Fürstenwalde oder via Lieferservice.",
+                "search-ph": "Suche nach Garri, Yam, Sheabutter...",
+                "concept-tag": "Gründungskonzept & Zielsetzung",
+                "concept-title": "Das hybride Afro-Asian Handelskonzept",
+                "concept-desc": "Roots & Spice schließt eine wichtige Versorgungslücke im Landkreis Oder-Spree. Statt 45 bis 60 Minuten nach Berlin zu pendeln, erhalten internationale Familien und Food-Enthusiasten direkten Zugang vor Ort in Fürstenwalde.",
+                "stat-1": "Grundnahrungsmittel (Yams, Kochbananen, Reis, Palmöl)",
+                "stat-2": "Hochmargige Kosmetik & Haarpflege (Sheabutter, Schwarze Seife)",
+                "adv-title": "Strategische Vorteile",
+                "adv-1-strong": "Top-Standort:",
+                "adv-1-text": "Nahe Fürstenwalde Hbf / Eisenbahnstraße mit hervorragender Verkehrsanbindung.",
+                "adv-2-strong": "Omnichannel-Ansatz:",
+                "adv-2-text": "Physisches Ladengeschäft kombiniert mit einem regionalen Online-Lieferservice.",
+                "adv-3-strong": "Begegnungsort:",
+                "adv-3-text": "Kultureller Treffpunkt für die wachsende internationale Community in Brandenburg.",
+                "rev-heading": "Kundenmeinungen & Anregungen",
+                "rev-sub": "Teilen Sie Ihre Gedanken, Produktwünsche oder Rückmeldungen mit uns!",
+                "form-title": "Kommentar oder Produktwunsch hinterlassen",
+                "form-name": "Ihr Name",
+                "form-rating": "Bewertung",
+                "form-comment": "Ihr Kommentar / Gewünschtes Produkt",
+                "form-btn": "Kommentar absenden",
+                "footer-desc": "Hybrides Afro-Asian Fachgeschäft und E-Commerce-Plattform mit Sitz in Fürstenwalde/Spree, Brandenburg.",
+                "footer-loc-title": "Standort",
+                "country": "Deutschland",
+                "footer-links-title": "Schnelllinks",
+                "footer-news-title": "Direktkontakt",
+                "footer-news-sub": "Haben Sie Fragen oder Produktanfragen? Schreiben Sie uns auf WhatsApp.",
+                "rights": "Alle Rechte vorbehalten.",
+                "inquire": "Anfrage via WhatsApp",
+                "lang-select": "Language / Sprache",
+                "mobile-dept-title": "Produktabteilungen",
+                "mobile-pages-title": "Links",
+                "need-help": "Fragen oder Direktbestellung?"
+            }
+        };
+
+        const productsData = [
+            { id: 1, category: "frozen", unit: "800g / 1kg", image: "Frozen  and seafood.jpg", name: {en: "Frozen Tilapia & Whole Seafood", de: "Tiefgekühlter Tilapia & Meeresfrüchte"}, desc: {en: "Cleaned gutted tilapia, mackerel, horse mackerel, stockfish chunks (Panla), and salted fish.", de: "Gereinigter Tilapia, Makrele, Makrelenfilet, Stör-/Panlastücke (Panla) und Salzfisch."} },
+            { id: 2, category: "frozen", unit: "per kg", image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500&auto=format&fit=crop&q=60", name: {en: "Meats & Specialty Cuts", de: "Fleisch & Spezialzuschnitte"}, desc: {en: "Cow foot, cow skin (kpomo / ponmo), tripe (shaki), goat meat cuts, oxtail, and beef offals.", de: "Kuhfuß, Kpomo / Ponmo (Rinderhaut), Kutteln (Shaki), Ziegenfleisch, Ochsenschwanz und Innereien."} },
+            { id: 3, category: "frozen", unit: "500g", image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop&q=60", name: {en: "Frozen Leaves & Vegetables", de: "Tiefgekühlte Blätter & Gemüse"}, desc: {en: "Cassava leaves (Saka Saka), jute leaves (ewedu), bitterleaf, fluted pumpkin (ugu), and okra.", de: "Maniokblätter (Saka Saka), Juteblätter (Ewedu), Bitterblatt, Gemüsekürbisblätter (Ugu) und Okra."} },
+            { id: 4, category: "fresh", unit: "per kg / tuber", image: "swallow and tubers.jpg", name: {en: "Fresh African White Yam Tubers & Swallow Bases", de: "Frische Afrikanische Yamswurzeln & Swallow-Knollen"}, desc: {en: "Fresh white yam, cassava, water yam, malanga, and traditional swallow tubers.", de: "Frischer Yams, Maniok, Wasseryam, Malanga und traditionelle Swallow-Knollen."} },
+            { id: 5, category: "cosmetics", unit: "250g / 500ml", image: "cosmeic hair style.jpg", name: {en: "Afro Hair Care & Styling Products", de: "Afro-Haarpflege & Styling-Produkte"}, desc: {en: "Conditioning hair creams (Skala, Cantu), hair growth oils, edge control, and braiding supplies.", de: "Haarpflege-Cremes (Skala, Cantu), Haarwuchsöle, Edge-Control und Braiding-Zubehör."} },
+            { id: 6, category: "cosmetics", unit: "250g", image: "black soap.jpg", name: {en: "Raw Shea Butter & African Black Soap", de: "Unraffinierte Sheabutter & Schwarze Seife"}, desc: {en: "100% pure organic unrefined shea butter, Dudu Osun African black soap, and cocoa lotion.", de: "100% reine Bio-Sheabutter, Dudu Osun Afrikanische Schwarze Seife und Kakaobutter."} },
+            { id: 7, category: "grains", unit: "1kg - 5kg", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop&q=60", name: {en: "Garri, Flours & Swallow Mixes", de: "Garri, Mehl & Swallow-Mixe"}, desc: {en: "Yellow & white Garri (Ijebu), Elubo (yam flour), plantain flour, cassava flour, and semolina.", de: "Gelbes & weißes Garri (Ijebu), Elubo (Yamsmehl), Kochbananenmehl, Maniokmehl und Grieß."} },
+            { id: 8, category: "grains", unit: "5kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop&q=60", name: {en: "Parboiled Rice & Honey Beans", de: "Parboiled Reis & Honigbohnen"}, desc: {en: "Long-grain parboiled rice (ideal for Jollof), Basmati rice, honey brown beans, and black-eyed peas.", de: "Langkorn-Reis (ideal für Jollof), Basmatireis, braune Honigbohnen und Augenbohnen."} },
+            { id: 9, category: "snacks", unit: "300g pack", image: "LoveChinChin.jpg", name: {en: "Crunchy Chin-Chin & Plantain Chips", de: "Knuspriges Chin-Chin & Kochbananenchips"}, desc: {en: "Authentic golden fried sweet chin-chin cubes, ripe & green plantain chips, and savory snacks.", de: "Authentisches goldgelbes Chin-Chin Gebäck, Kochbananenchips und herzhafte Knabbereien."} },
+            { id: 10, category: "spices", unit: "bottle / pack", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&auto=format&fit=crop&q=60", name: {en: "Red Palm Oil & Suya Spices", de: "Rotes Palmöl & Suya-Gewürze"}, desc: {en: "Unrefined red palm oil, Suya pepper (Yaji), Scotch bonnet powder, and Bouillon seasoning cubes.", de: "Unraffiniertes rotes Palmöl, Suya-Gewürz (Yaji), Scotch Bonnet Chilitrockenpulver & Brühwürfel."} },
+            { id: 11, category: "fresh", unit: "per kg", image: "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=500&auto=format&fit=crop&q=60", name: {en: "Yellow & Green Plantains", de: "Gelbe & Grüne Kochbananen"}, desc: {en: "Sweet ripe yellow plantains for frying, and firm green plantains for boiling or savory chips.", de: "Süße reife gelbe Kochbananen und feste grüne Kochbananen zum Kochen oder Frittieren."} },
+            { id: 12, category: "grains", unit: "pack / bottle", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&auto=format&fit=crop&q=60", name: {en: "Hibiscus Zobo Tea & Malt Drinks", de: "Hibiskus Zobo Tee & Malzgetränke"}, desc: {en: "Dried hibiscus flowers (Zobo/Sorrel), non-alcoholic Maltina malt beverages, and Asian teas.", de: "Getrocknete Hibiskusblüten (Zobo), alkoholfreie Malzgetränke (Maltina) und Tees."} }
         ];
 
-        let cart = [];
+        let currentLang = 'en';
         let currentFilter = 'all';
+
         let reviews = [
-            { name: "Samuel O.", rating: 5, text: "Having an Afro-Asian shop right here in Fürstenwalde will save me so many trips to Berlin. Fantastic product selection!" },
-            { name: "Nadine W.", rating: 5, text: "Thrilled to see natural shea butter and authentic spices included. Can't wait for the grand opening on Richard-Wagner-Straße!" }
+            { name: "Samuel O.", rating: 5, text: {en: "Having an Afro-Asian specialty store right here in Fürstenwalde saves me so many long trips to Berlin. Fantastic selection of yams and plantains!", de: "Ein Afro-Asian-Geschäft direkt hier in Fürstenwalde erspart mir so viele Fahrten nach Berlin. Fantastische Auswahl an Yams und Kochbananen!"} },
+            { name: "Nadine W.", rating: 5, text: {en: "Thrilled to find authentic shea butter, black soap, and fresh palm oil locally. Great customer service via WhatsApp!", de: "Großartig, dass es natürliche Sheabutter, Schwarze Seife und frisches Palmöl vor Ort gibt. Super Service per WhatsApp!"} }
         ];
 
+        // Language Switcher Handler
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Buttons visual toggle
+            const btnEn = document.getElementById('lang-en-btn');
+            const btnDe = document.getElementById('lang-de-btn');
+            const drawerEn = document.getElementById('drawer-lang-en');
+            const drawerDe = document.getElementById('drawer-lang-de');
+
+            if (lang === 'de') {
+                btnDe.className = "px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-600 text-white transition-all cursor-pointer";
+                btnEn.className = "px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white transition-all cursor-pointer";
+                drawerDe.className = "px-3 py-1 text-xs font-bold rounded-md bg-emerald-600 text-white shadow-xs";
+                drawerEn.className = "px-3 py-1 text-xs font-bold rounded-md text-slate-600 hover:text-slate-900";
+            } else {
+                btnEn.className = "px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-600 text-white transition-all cursor-pointer";
+                btnDe.className = "px-2.5 py-1 rounded-md text-xs font-bold text-slate-300 hover:text-white transition-all cursor-pointer";
+                drawerEn.className = "px-3 py-1 text-xs font-bold rounded-md bg-emerald-600 text-white shadow-xs";
+                drawerDe.className = "px-3 py-1 text-xs font-bold rounded-md text-slate-600 hover:text-slate-900";
+            }
+
+            // Translate static nodes
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            // Translate placeholders
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+
+            renderProducts(currentFilter);
+            renderReviews();
+        }
+
+        // Render Product Catalog Cards
         function renderProducts(filter = 'all') {
             const grid = document.getElementById('product-grid');
             const searchVal = document.getElementById('search-input').value.toLowerCase();
             
-            const filtered = products.filter(p => {
+            const filtered = productsData.filter(p => {
                 const matchesCat = (filter === 'all' || p.category === filter);
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
+                const matchesSearch = p.name[currentLang].toLowerCase().includes(searchVal) || p.desc[currentLang].toLowerCase().includes(searchVal);
                 return matchesCat && matchesSearch;
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500">No products found matching your search.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">${currentLang === 'de' ? 'Keine passenden Produkte gefunden.' : 'No products found matching your search.'}</div>`;
                 return;
             }
 
+            const inquireText = translations[currentLang]["inquire"];
+
             grid.innerHTML = filtered.map(p => `
-                <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col">
-                    <div class="h-48 overflow-hidden bg-stone-100 relative">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        <span class="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-xs text-white text-xs font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">${p.category}</span>
+                <div class="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group">
+                    <div class="h-48 overflow-hidden bg-slate-100 relative">
+                        <img src="${p.image}" alt="${p.name[currentLang]}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">${p.category}</span>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div>
-                            <h3 class="font-bold text-stone-900 text-base leading-snug">${p.name}</h3>
-                            <p class="text-xs text-stone-500 mt-1 line-clamp-2">${p.desc}</p>
+                            <h3 class="font-bold text-slate-900 text-base leading-snug">${p.name[currentLang]}</h3>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed line-clamp-2">${p.desc[currentLang]}</p>
                         </div>
-                        <div class="flex items-center justify-between pt-2 border-t border-stone-100">
-                            <div>
-                                <span class="text-lg font-black text-amber-700">€${p.price.toFixed(2)}</span>
-                                <span class="text-xs text-stone-400 block">${p.unit}</span>
-                            </div>
-                            <button onclick="addToCart(${p.id})" class="bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs">
-                                <i class="fa-solid fa-plus"></i> Add
-                            </button>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-100 gap-2">
+                            <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md shrink-0">${p.unit}</span>
+                            <a href="https://wa.me/4915144338689?text=Hello%20Roots%20%26%20Spice%2C%20I%20would%20like%20to%20inquire%20about%20${encodeURIComponent(p.name[currentLang])}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-xs shrink-0">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> <span>${inquireText}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function filterCategory(cat) {
+        // Navigate & Filter Category with Smooth Scroll
+        function navigateToCategory(cat, event) {
+            if (event) event.preventDefault();
             currentFilter = cat;
+
+            // Update Department active highlight styles
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.className = "cat-btn bg-stone-50 hover:bg-amber-50 border-2 border-stone-200 hover:border-amber-600 text-stone-800 p-5 rounded-2xl text-center font-semibold transition-all cursor-pointer";
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "cat-btn bg-emerald-50 border-2 border-emerald-600 text-emerald-900 p-4 rounded-xl text-center font-bold text-xs transition-all cursor-pointer shadow-xs ring-2 ring-emerald-600/30";
+                } else {
+                    btn.className = "cat-btn bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-600 text-slate-800 p-4 rounded-xl text-center font-semibold text-xs transition-all cursor-pointer";
+                }
             });
-            event.currentTarget.className = "cat-btn bg-amber-50 border-2 border-amber-600 text-amber-900 p-5 rounded-2xl text-center font-bold transition-all cursor-pointer shadow-xs";
+
             renderProducts(cat);
+
+            // Smooth scroll down to shop catalog target
+            const shopSection = document.getElementById('shop');
+            if (shopSection) {
+                shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Close mobile menu if open
+            closeMobileDrawer();
+        }
+
+        function scrollToElement(id, event) {
+            if (event) event.preventDefault();
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function scrollToTop(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function searchProducts() {
             renderProducts(currentFilter);
         }
 
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            drawer.classList.toggle('hidden');
-        }
+        // Mobile Drawer Toggle Logic
+        function toggleMobileDrawer() {
+            const drawer = document.getElementById('mobileDrawer');
+            const overlay = document.getElementById('mobileDrawerOverlay');
+            const isClosed = drawer.classList.contains('translate-x-full');
 
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.qty++;
+            if (isClosed) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.classList.add('overflow-hidden');
             } else {
-                cart.push({ ...product, qty: 1 });
+                closeMobileDrawer();
             }
-            updateCartUI();
-            toggleCart();
         }
 
-        function updateCartUI() {
-            const count = cart.reduce((sum, item) => sum + item.qty, 0);
-            document.getElementById('cart-badge').innerText = count;
-
-            const container = document.getElementById('cart-items');
-            if (cart.length === 0) {
-                container.innerHTML = `<p class="text-stone-500 text-center py-8 text-sm">Your cart is currently empty.</p>`;
-                document.getElementById('cart-subtotal').innerText = '€0.00';
-                document.getElementById('cart-total').innerText = '€0.00';
-                return;
-            }
-
-            container.innerHTML = cart.map(item => `
-                <div class="flex items-center justify-between gap-4 bg-stone-50 p-3.5 rounded-xl border border-stone-200">
-                    <div class="flex-1">
-                        <h4 class="font-bold text-stone-900 text-sm">${item.name}</h4>
-                        <span class="text-xs text-stone-500">€${item.price.toFixed(2)} x ${item.qty}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 bg-white border border-stone-300 rounded-lg text-xs font-bold hover:bg-stone-100 cursor-pointer">-</button>
-                        <span class="text-sm font-bold w-5 text-center">${item.qty}</span>
-                        <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 bg-white border border-stone-300 rounded-lg text-xs font-bold hover:bg-stone-100 cursor-pointer">+</button>
-                    </div>
-                </div>
-            `).join('');
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            const shipping = 4.99;
-            const total = subtotal + shipping;
-
-            document.getElementById('cart-subtotal').innerText = `€${subtotal.toFixed(2)}`;
-            document.getElementById('cart-total').innerText = `€${total.toFixed(2)}`;
+        function closeMobileDrawer() {
+            const drawer = document.getElementById('mobileDrawer');
+            const overlay = document.getElementById('mobileDrawerOverlay');
+            if (drawer) drawer.classList.add('translate-x-full');
+            if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('overflow-hidden');
         }
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-            }
-            updateCartUI();
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            alert('Checkout Simulation Successful! In the live production app, this connects to secure payment gateways (SEPA, PayPal, Credit Card) and local delivery routing for Fürstenwalde / Oder-Spree.');
-            cart = [];
-            updateCartUI();
-            toggleCart();
-        }
-
+        // Reviews Rendering & Posting
         function renderReviews() {
             const list = document.getElementById('reviews-list');
             list.innerHTML = reviews.map(r => `
-                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-2">
+                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
                     <div class="flex items-center justify-between">
-                        <span class="font-bold text-stone-900 text-sm">${r.name}</span>
+                        <span class="font-bold text-slate-900 text-sm">${r.name}</span>
                         <div class="text-amber-500 text-xs">
                             ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
                         </div>
                     </div>
-                    <p class="text-xs text-stone-600 leading-relaxed">${r.text}</p>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${r.text[currentLang]}</p>
                 </div>
             `).join('');
         }
@@ -484,17 +699,18 @@
             e.preventDefault();
             const name = document.getElementById('reviewer-name').value;
             const rating = parseInt(document.getElementById('reviewer-rating').value);
-            const text = document.getElementById('reviewer-text').value;
+            const textContent = document.getElementById('reviewer-text').value;
 
-            reviews.unshift({ name, rating, text });
+            reviews.unshift({ name, rating, text: { en: textContent, de: textContent } });
             renderReviews();
             document.getElementById('review-form').reset();
-            alert('Thank you! Your comment has been posted.');
+            alert(currentLang === 'de' ? 'Vielen Dank! Ihr Kommentar wurde veröffentlicht.' : 'Thank you! Your comment has been posted.');
         }
 
-        // Initialize on load
-        renderProducts();
-        renderReviews();
+        // App Initializer
+        window.onload = function() {
+            setLanguage('en');
+        };
     </script>
 </body>
 </html>
